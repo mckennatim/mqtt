@@ -1,5 +1,5 @@
 # mqtt
-An exploration of mqtt protocol on an (a) esp8266 wifi microcontroller, (b) a node express server, mqtt broker and websockets server, (c) a web client for http and websockets.
+An exploration of mqtt protocol on an (a) esp8266 wifi microcontroller, (b) a node express server, mqtt broker and websockets server, (c) a web client for http and mqtt riding on websockets.
 
 ## tags
 ### 01-no-webconfig-non-indep
@@ -13,4 +13,6 @@ void loop() {
   client.loop();
   ```
 
-  
+
+### 02-no-webconfig-indep
+now runs independently of server and client

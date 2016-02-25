@@ -3,8 +3,10 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-#define deviceId "AAAAA0"
-#define cmd "AAAAA0/cmd"
+//#define deviceId "AAAAA0"
+#define deviceId "CYURD001"
+#define cmd "CYURD001/cmd"
+//#define cmd "AAAAA0/cmd"
 #define wifi_ssid "street_no_vale2"
 #define wifi_password "jjjjjjjj"
 
@@ -83,6 +85,27 @@ void reconnect() {
     }
   }
 }
+void reconn(int num) {
+  int cnt = num;
+  while (cnt>0) {
+    Serial.print("Attempting MQTT connection...");
+    // Attempt to connect
+    // If you do not want to use a username and password, change next line to
+    // if (client.connect("ESP8266Client")) {
+    if (client.connect("ESP8266Client")) {
+      Serial.println("connected");
+      client.subscribe(cmd);
+      break;
+    } else {
+      Serial.print("failed, rc=");
+      Serial.print(client.state());
+      Serial.println(" try again in 5 seconds");
+      // Wait 5 seconds before retrying
+      delay(5000);
+      cnt--;
+    }
+  }
+}
 
 long lastMsg = 0;
 int hoa ;
@@ -116,9 +139,11 @@ void setup() {
 
 void loop() {
   if (!client.connected()) {
-    reconnect();
+    reconn(1);
   }
-  client.loop();
+  if (client.connected()){
+    client.loop();
+  }
   float temp;
   int temp1;
   long now = millis();
@@ -149,7 +174,9 @@ void loop() {
       sprintf(status, "%s/status", deviceId);
       sprintf(payload,"{ payload:%s, topic:'%s' }", astr, status);
       Serial.println(payload);
-      client.publish(status, astr, true);
+      if (client.connected()){
+        client.publish(status, astr, true);
+      }
     }
   }
 }
