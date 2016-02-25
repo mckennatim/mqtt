@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>webmqtt</title>
+	<script src="./dist/browserMqtt.js"></script>	
+</head>
+<body>
+	<h1>hellop</h1>
+	<script>
+		var topic = "presence";
+		var socket  = mqtt.connect('ws://localhost:3333/mqtt'); // no args
+		socket.subscribe(topic, {qos: 1}, function() {
+		    socket.publish(topic, 'Web Client is alive.. Test');
+		});		
+	</script>
+</body>
+</html>

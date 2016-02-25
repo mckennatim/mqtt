@@ -1,0 +1,14 @@
+{
+  "name": "sb-mqtt-client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "client1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Timothy S. McKenna <mckenna.tim@gmail.com> (http://mckennatim.github.io/mckennatim/)",
+  "license": "MIT",
+  "dependencies": {
+    "mqtt": "1.6.3"
+  }
+}

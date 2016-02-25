@@ -1,0 +1,19 @@
+{
+  "name": "paho",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Timothy S. McKenna <mckenna.tim@gmail.com> (http://mckennatim.github.io/mckennatim/)",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "0.0.2",
+    "mqtt_over_websockets": "0.0.1",
+    "node-localstorage": "1.1.2",
+    "tls": "0.0.1",
+    "ws": "1.0.1"
+  }
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>paho2</title>
+	<script src="./mqttws31-min.js"></script>
+</head>
+<body>
+	<h4>paho</h4>
+	<script>
+		console.log(location.hostname)
+		client = new Paho.MQTT.Client(location.hostname, Number(3333), "clientId");
+		client.onConnectionLost = onConnectionLost;
+		client.onMessageArrived = onMessageArrived;
+		console.log(client.path)
+		client.connect({onSuccess:onConnect});
+		function onConnect() {
+			console.log("onConnect");
+			client.subscribe("presence");
+			message = new Paho.MQTT.Message("Hello from paho");
+			message.destinationName = "presence";
+			client.send(message); 
+		}
+		function onConnectionLost(responseObject) {
+			if (responseObject.errorCode !== 0) {
+				console.log("onConnectionLost:"+responseObject.errorMessage);
+			}
+		}
+		function onMessageArrived(message) {
+			console.log("onMessageArrived:"+message.payloadString);
+		}		
+	</script>
+</body>
+</html>

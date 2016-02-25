@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>webmqtt</title>
+	<script src="./dist/browserMqtt.js"></script>	
+</head>
+<body>
+	<h1>hellop</h1>
+	<script>
+		var client = mqtt.connect('ws://localhost:3333')
+		client.on('connect', function(){
+			console.log('maybe connected')
+			client.subscribe('presence', function(){
+				console.log(client)
+				client.on('message', function(topic, payload) {
+					console.log(payload)
+					console.log(payload.toString())
+				});	
+				client.publish('presence', 'Web Client is alive.. Test Ping! ');
+			});
+		});
+	</script>
+</body>
+</html>
