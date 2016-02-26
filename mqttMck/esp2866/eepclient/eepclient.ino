@@ -177,8 +177,11 @@ void setup() {
     }
   Serial.print("PASS: ");
   Serial.println(epass);  
+  Serial.println(esid.length());  
+  Serial.println(esid.c_str());  
   if ( esid.length() > 1 ) {
       WiFi.begin(esid.c_str(), epass.c_str());
+      //WiFi.begin(" ", " ");
       if (testWifi()) {
         launchWeb(0);
         return;
