@@ -2,6 +2,8 @@
 #include <PubSubClient.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <EEPROM.h>
+#include <ArduinoJson.h>
 
 //#define deviceId "AAAAA0"
 #define deviceId "CYURD001"
@@ -56,9 +58,17 @@ void callback(char* topic, byte* payload, unsigned int length) {
     incoming[i] = c;
   }
   incoming[length] = '\0';
-  String sinc = String(incoming).c_str();
-  rela = sinc[sinc.indexOf(':')+1];
-  relay = rela - '0';
+  String sinc = String(incoming).c_str();  
+  StaticJsonBuffer<200> jsonBuffer;
+  char json[] = "{\"sensor\":\"gps\",\"time\":1351824120,\"data\":[48.756080,2.302038]}";  
+  Serial.println(incoming);
+  Serial.println(json);
+  JsonObject& root = jsonBuffer.parseObject(incoming);
+  //long rel = root["time"];
+  relay = root["heat"];
+  //Serial.println(rel);
+  // rela = sinc[sinc.indexOf(':')+1];
+  // relay = rela - '0';
   if(relay<2){
     digitalWrite(ALED, relay);
     oldLed = !digitalRead(ALED);
@@ -122,6 +132,25 @@ char payload[100];
 
 void setup() {
   Serial.begin(115200);
+  EEPROM.begin(512);
+  delay(10);
+  Serial.println();
+  Serial.println("Reading EEPROM ssid");
+  String esid;
+  for (int i = 0; i < 32; ++i)
+    {
+      esid += char(EEPROM.read(i));
+    }
+  Serial.print("SSID: ");
+  Serial.println(esid);
+  Serial.println("Reading EEPROM pass");
+  String epass = "";
+  for (int i = 32; i < 96; ++i)
+    {
+      epass += char(EEPROM.read(i));
+    }
+  Serial.print("PASS: ");
+  Serial.println(epass);   
   setup_wifi();
   client.setServer(mqtt_server, 1883);
   client.setCallback(callback);

@@ -16,6 +16,7 @@
 	<span  id="temp1"></span><br>
 	roof heater on  ? <span id='lue'></span><br>
 	<button id="button" onclick="uclicked()">toggle device</button>
+	<button id="button2" onclick="empty()">empty eeprom</button>
 	<script>
 		const deviceId ='CYURD001'
 		const statu = deviceId+'/status'
@@ -26,9 +27,14 @@
 		function uclicked(){
 			//document.getElementById('lue').innerHTML=onoff
 			onoff=!onoff;
-			var thecmd =  "{ \"heat\":"+onoff*1+", \"src\":1 }"
+			var thecmd =  "{\"heat\":"+onoff*1+",\"src\":1,\"empty\":0}"
 			console.log(thecmd);
 			client.publish(cmd, thecmd)
+		}
+		function empty(){
+			var thecmd =  "{\"heat\":"+onoff*1+",\"src\":1,\"empty\":1}"
+			console.log(thecmd);
+			client.publish(cmd, thecmd)			
 		}
 		client.on('connect', function(){
 			console.log('maybe connected')
