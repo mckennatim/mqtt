@@ -86,9 +86,7 @@ void createConfigServer(int webtype){
 
 void launchWeb(int webtype) {
   Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.print("Local IP: ");
-  Serial.println(WiFi.localIP());
+  Serial.println("AP started");
   Serial.print("SoftAP IP: ");
   Serial.println(WiFi.softAPIP());
   // Start the server
@@ -187,8 +185,8 @@ void setup_wifi() {
   } else {
     Serial.println("WiFi not connected-goneto Station Mode");    
   }
-
 }
+
 char incoming[40];
 int relay;
 char c;
